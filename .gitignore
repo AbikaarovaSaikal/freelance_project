@@ -1,0 +1,5 @@
+venv
+db.sqlite3
+freelance_project/__pycache__
+freelance/__pycache__
+freelance/migrations
