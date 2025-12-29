@@ -20,5 +20,7 @@ import freelance.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', freelance.views.index)
+    path('', freelance.views.home),
+    path('freelance', freelance.views.freelance_list),
+    path('freelance/<int:freelance_id>/', freelance.views.freelance_detail)
 ]
