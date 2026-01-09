@@ -1,0 +1,10 @@
+{% extends "main_page.html" %}
+{% block content %}
+
+<form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create vacancy</button>
+</form>
+
+{% endblock content %}
