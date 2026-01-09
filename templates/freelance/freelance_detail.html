@@ -2,7 +2,9 @@
 
 {% block content %}
 <div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
+    {% if freelance.photo %}
+    <img src="{{freelance.photo.url}}" class="card-img-top" alt="...">
+    {% endif %}
     <div class="card-body">
         <h5 class="card-title">name: {{freelance.name}}</h5>
         <p class="card-text">descritpion: {{freelance.description}}</p>

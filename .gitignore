@@ -6,3 +6,5 @@ freelance_project/__init__.py
 freelance/__pycache__
 freelance/__init__.py
 freelance/migrations
+media
+static/null_image.png
