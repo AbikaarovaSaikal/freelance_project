@@ -8,3 +8,6 @@ freelance/__init__.py
 freelance/migrations
 media
 static/null_image.png
+users/__init__.py
+users/migrations
+users/__pycache__

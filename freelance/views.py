@@ -4,22 +4,27 @@ from django.http import HttpResponse
 
 from .form import FreelanceForm
 
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 def home(request):
     if request.method == "GET":
         return render(request, "main_page.html")
 
+@login_required(login_url="/login/")
 def freelance_list(request):
     if request.method == "GET":
         freelance = Job.objects.all()
         return render(request, 'freelance/freelance_list.html', context={"freelance": freelance})
 
+@login_required(login_url="/login/")
 def freelance_detail(request, freelance_id):
     if request.method == "GET":
         freelance = Job.objects.filter(id=freelance_id).first()
         return render(request, "freelance/freelance_detail.html", context={"freelance": freelance})
     
+@login_required(login_url="/login/")
 def freelance_create_view(request):
     if request.method == "GET":
         form = FreelanceForm()
