@@ -1,6 +1,10 @@
 {% extends "main_page.html" %}
 
 {% block content %}
+<form method="GET" action="" enctype="multipart/form-data">
+    {{ form.as_p}}
+    <button type="submit">Search</button>
+    </form>
 {% for job in freelance %}
 <div class="card" style="width: 18rem;">
     {% if job.photo %}
@@ -10,9 +14,17 @@
     {% endif %}
     <div class="card-body">
         <h5 class="card-title">name: {{job.name}}</h5>
+        <h6 class="card-title">description: {{job.description}}</h6>
         <p class="card-text">payment: {{job.payment}}</p>
         <a href="/freelance/{{job.id}}/" class="btn btn-primary">Подробнее</a>
     </div>
 </div>
 {% endfor %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% for i in max_page%}
+        <li class="page-item"><a class="page-link" href="/freelance/?page={{i}}">{{i}}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
 {% endblock content %}
