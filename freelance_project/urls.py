@@ -20,11 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 import freelance.views
 
-from users.views import register_view, login_view, logout_view
+from users.views import register_view, login_view, logout_view, profile_view
 user_patterns = [
     path('register/', register_view),
     path('login/', login_view),
-    path('logout/', logout_view)
+    path('logout/', logout_view),
+    path('profile/', profile_view)
 ]
 
 urlpatterns = (
@@ -34,6 +35,7 @@ urlpatterns = (
         path('', freelance.views.home),
         path('freelance/', freelance.views.freelance_list),
         path('freelance/<int:freelance_id>/', freelance.views.freelance_detail),
+        path("freelance/<int:freelance_id>/update/", freelance.views.freelance_update),
         path('freelance/create/', freelance.views.freelance_create_view)
     ] 
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

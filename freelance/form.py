@@ -21,3 +21,8 @@ class SearchForm(forms.Form):
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(), required=False
     )
+
+class CommentForm(forms.Form):
+    rate_choices = [(1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")]
+    text = forms.CharField(max_length=1000)
+    rate = forms.ChoiceField(choices=rate_choices)

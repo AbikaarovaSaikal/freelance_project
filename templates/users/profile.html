@@ -1,0 +1,35 @@
+{% extends "main_page.html" %}
+
+{% block content %}
+<div class="card" style="width: 35rem;">
+    {% if user.profile.photo %}
+    <img src="{{user.profile.photo.url}}" class="card-img-top" alt="...">
+    {% else %}
+    <img src="/static/null_image.png" class="card-img-top" alt="...">
+    {% endif %}
+    <h1>Name: {{user.username}}</h1>
+    <h1>Email: {{user.email}}</h1>
+    <h1>Age: {{user.profile.age}}</h1>
+</div>
+<p></p>
+<p></p>
+<h1>Вакансии профиля:</h1>
+<p></p>
+<p></p>
+{% for freelance in freelance %}
+<div class="card" style="width: 18rem;">
+    {% if freelance.photo %}
+    <img src="{{freelance.photo.url}}" class="card-img-top" alt="...">
+    {% else %}
+    <img src="/static/null_image.png" class="card-img-top" alt="...">
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">name: {{freelance.name}}</h5>
+        <h6 class="card-title">description: {{freelance.description}}</h6>
+        <p class="card-text">price: {{freelance.price}}</p>
+        <p>views: {{freelance.views}}</p>
+        <a href="/freelance/{{freelance.id}}/" class="btn btn-primary">Подробнее</a>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

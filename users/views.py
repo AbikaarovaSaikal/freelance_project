@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from users.forms import LoginForm, RegisterForm
 from django.http import HttpResponse
@@ -7,17 +7,22 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import authenticate, login, logout
+from users.models import Profile
 
 def register_view(request):
     if request.method == "GET":
         forms = RegisterForm()
         return render(request, "users/register.html", context={"form": forms})
     elif request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.cleaned_data.__delitem__("confirm_password")
-            User.objects.create_user(**form.cleaned_data)
-            return HttpResponse("User created")
+        forms_obj = RegisterForm(request.POST)
+        if forms_obj.is_valid():
+            forms_obj.cleaned_data.__delitem__("confirm_password")
+            age = forms_obj.cleaned_data.pop("age")
+            photo = forms_obj.cleaned_data.pop("photo")
+            user = User.objects.create_user(**forms_obj.cleaned_data)
+            if user:
+                Profile.objects.create(user=user, age=age, photo=photo)
+            return redirect("/login/")
         return HttpResponse("Invalid form")
     
 def login_view(request):
@@ -28,11 +33,19 @@ def login_view(request):
         forms_obj = LoginForm(request.POST)
         if forms_obj.is_valid():
             user = authenticate(**forms_obj.cleaned_data)
-            login(request, user)
-            return HttpResponse("User logged in")
+            if user:
+                login(request, user)
+            return redirect("/")
         
 @login_required(login_url="/login/")
 def logout_view(request):
     if request.method == "GET":
         logout(request)
-        return HttpResponse("User logged out")
+        return redirect("/")
+    
+@login_required(login_url="/login/")
+def profile_view(request):
+    if request.method == "GET":
+        user = request.user
+        freelance = user.freelance.all()
+        return render(request, "users/profile.html", context={"user": user, "freelance": freelance})

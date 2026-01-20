@@ -9,6 +9,33 @@
         <h5 class="card-title">name: {{freelance.name}}</h5>
         <p class="card-text">descritpion: {{freelance.description}}</p>
         <p class="card-text">payment: {{freelance.payment}}</p>
+        <p>views: {{freelance.views}}</p>
+        <p>average: {{average}}</p>
+        {% if request.user == freelance.user %}
+        <a href="/freelance/{{freelance.id}}/update/" class="btn btn-primary">Изменить</a>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="delete">
+            <button type="submit">Удалить</button>
+        </form>
+        {% else %}
+        <a href="/freelance/{{freelance.id}}/" class="btn btn-primary">Купить</a>
+        {% endif %}
     </div>
 </div>
+<form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button type="submit">Send comment</button>
+</form>
+
+{% for comment in comments %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <p class="card-text">text: {{comment.text}}</p>
+        <p>author: {{comment.author.username}}</p>
+        <p>rate: {{comment.rate}}</p>
+    </div>
+</div>
+{% endfor %}
 {% endblock content %}
