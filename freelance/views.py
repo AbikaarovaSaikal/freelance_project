@@ -111,7 +111,7 @@ def freelance_update(request, freelance_id):
             if request.user == freelance.user:
                 freelance.name = form.cleaned_data["name"]
                 freelance.description = form.cleaned_data["description"]
-                freelance.price = form.cleaned_data["payment"]
+                freelance.payment = form.cleaned_data["payment"]
                 freelance.photo = form.cleaned_data["photo"]
                 freelance.save()
 

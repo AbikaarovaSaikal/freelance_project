@@ -14,7 +14,7 @@ def register_view(request):
         forms = RegisterForm()
         return render(request, "users/register.html", context={"form": forms})
     elif request.method == "POST":
-        forms_obj = RegisterForm(request.POST)
+        forms_obj = RegisterForm(request.POST, request.FILES)
         if forms_obj.is_valid():
             forms_obj.cleaned_data.__delitem__("confirm_password")
             age = forms_obj.cleaned_data.pop("age")
